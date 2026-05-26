@@ -318,7 +318,7 @@
       transition: max-height .5s cubic-bezier(.4,0,.2,1);
       background: var(--white);
     }
-    .project-card.open .card-body { max-height: 600px; }
+    .project-card.open .card-body { max-height: 3000px; }
     .card-body-inner { padding: 28px 32px 32px; }
     .card-insight {
       font-family: 'Cormorant Garamond', serif;
@@ -346,22 +346,22 @@
 
     /* ── PROJECT SCREENSHOTS ── */
     .card-screenshots {
-      display: flex; gap: 12px; margin-top: 20px;
-      overflow-x: auto; padding-bottom: 4px;
+      margin-top: 20px;
     }
     .card-screenshot {
-      flex: 0 0 auto;
-      width: 180px; height: 320px;
+      width: 100%;
       border-radius: 16px;
       overflow: hidden;
       border: 1px solid var(--border);
       background: var(--cream-mid);
     }
     .card-screenshot img {
-      width: 100%; height: 100%; object-fit: cover; display: block;
+      width: 100%; height: auto; display: block;
     }
-    /* Hide placeholder slots — only shown when img src is populated */
-    .card-screenshot:not(:has(img)) { display: none; }
+    /* Hide empty slots — only visible when an <img> child is present */
+    .card-screenshot:empty { display: none; }
+    /* Hide the whole row if all slots are empty */
+    .card-screenshots:not(:has(.card-screenshot img)) { display: none; }
 
     /* ── MORE WINS ── */
     .wins-section { padding: 0 52px 80px; }
@@ -726,10 +726,8 @@
             <span class="pill">PI abandonment –2% on mApp</span>
             <span class="pill">Tax Home: 104.7 ITC first-day conversion</span>
           </div>
-          <!-- Screenshots: drop iPhone frames into /screenshots/ and update src -->
           <div class="card-screenshots">
             <div class="card-screenshot"><img src="screenshots/snackable-pi-1.jpg" alt="Snackable PI hub screen"></div>
-            <div class="card-screenshot"><img src="screenshots/snackable-pi-2.jpg" alt="Snackable PI flow screen"></div>
           </div>
         </div>
       </div>
@@ -763,10 +761,8 @@
             <span class="pill">First lock-screen data approval at Intuit</span>
             <span class="pill">Featured in FY25 TV ads</span>
           </div>
-          <!-- Screenshots: drop iPhone frames into /screenshots/ and update src -->
           <div class="card-screenshots">
             <div class="card-screenshot"><img src="screenshots/dynamic-island-1.jpg" alt="Dynamic Island lock screen"></div>
-            <div class="card-screenshot"><img src="screenshots/dynamic-island-2.jpg" alt="Live Activity expanded view"></div>
           </div>
         </div>
       </div>
