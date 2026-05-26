@@ -510,6 +510,63 @@
       .community-grid { grid-template-columns: 1fr; }
       footer { padding: 60px 24px 40px; }
       .skill-row { grid-template-columns: 1fr; gap: 8px; }
+      .testimonials-section { padding: 60px 24px; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials-section {
+      padding: 80px 52px;
+      background: var(--cream-mid);
+    }
+    .testimonials-section .section-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: .72rem; font-weight: 600; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 48px; display: flex; align-items: center; gap: 12px;
+    }
+    .testimonials-section .section-label::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+    .testimonials-anchor {
+      border-left: 3px solid var(--rust);
+      padding: 24px 28px;
+      background: var(--rust-light);
+      border-radius: 0 12px 12px 0;
+      margin-bottom: 40px;
+    }
+    .testimonials-anchor blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.45rem; font-weight: 400; font-style: italic;
+      line-height: 1.55; color: var(--ink);
+      margin-bottom: 12px;
+    }
+    .testimonials-anchor cite {
+      font-size: .8rem; font-weight: 600; letter-spacing: .04em;
+      text-transform: uppercase; color: var(--muted); font-style: normal;
+    }
+    .testimonials-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    }
+    .testimonial-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+    }
+    .testimonial-card q {
+      font-size: .92rem; line-height: 1.6; color: var(--ink-mid);
+      display: block; margin-bottom: 16px;
+      quotes: "\201C" "\201D";
+    }
+    .testimonial-card q::before { content: open-quote; }
+    .testimonial-card q::after  { content: close-quote; }
+    .testimonial-card .tc-name {
+      font-size: .75rem; font-weight: 600; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--ink);
+    }
+    .testimonial-card .tc-role {
+      font-size: .73rem; color: var(--muted);
     }
   </style>
 </head>
@@ -873,6 +930,34 @@
       <div class="icon">🦈</div>
       <h4>CG Shark Tank — Top 10</h4>
       <p>Tax Trivia gamification concept. Selected top-10, presented to SLT.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section">
+  <div class="section-label">What colleagues say</div>
+
+  <div class="testimonials-anchor fade-up">
+    <blockquote>"She managed the most aggressive mobile experimentation portfolio in CG this season. Her product judgment is consistently validated in-market."</blockquote>
+    <cite>Dan Williams — Director of Product Management, Intuit</cite>
+  </div>
+
+  <div class="testimonials-grid">
+    <div class="testimonial-card fade-up">
+      <q>You've been an incredible partner to work with. Always supportive, yet honest when we try to build new, exciting things — which I truly appreciate. You're too good not to be here.</q>
+      <div class="tc-name">Ashwith Atluri</div>
+      <div class="tc-role">Senior Staff PM, TurboTax</div>
+    </div>
+    <div class="testimonial-card fade-up" style="transition-delay:.1s">
+      <q>It was a pleasure working together. I learned so much from you the last couple of years.</q>
+      <div class="tc-name">Limor Mazlin</div>
+      <div class="tc-role">Product Manager, Intuit</div>
+    </div>
+    <div class="testimonial-card fade-up" style="transition-delay:.2s">
+      <q>It was reassuring to have you as my PM partner. I certainly had a blast.</q>
+      <div class="tc-name">Radley Dioso</div>
+      <div class="tc-role">Software Engineer, TurboTax Mobile</div>
     </div>
   </div>
 </section>
