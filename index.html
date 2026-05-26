@@ -344,6 +344,25 @@
     }
     .pill.strong { background: var(--ink); color: var(--cream); border-color: var(--ink); }
 
+    /* ── PROJECT SCREENSHOTS ── */
+    .card-screenshots {
+      display: flex; gap: 12px; margin-top: 20px;
+      overflow-x: auto; padding-bottom: 4px;
+    }
+    .card-screenshot {
+      flex: 0 0 auto;
+      width: 180px; height: 320px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--cream-mid);
+    }
+    .card-screenshot img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    /* Hide placeholder slots — only shown when img src is populated */
+    .card-screenshot:not(:has(img)) { display: none; }
+
     /* ── MORE WINS ── */
     .wins-section { padding: 0 52px 80px; }
     .wins-section details {
@@ -581,6 +600,7 @@
   <ul>
     <li><a href="#work">Work</a></li>
     <li><a href="#experience">Experience</a></li>
+    <li><a href="https://www.linkedin.com/messaging/compose/?recipients=tsangwinnie" target="_blank">Contact</a></li>
   </ul>
 </nav>
 
@@ -706,6 +726,11 @@
             <span class="pill">PI abandonment –2% on mApp</span>
             <span class="pill">Tax Home: 104.7 ITC first-day conversion</span>
           </div>
+          <!-- Screenshots: drop iPhone frames into /screenshots/ and update src -->
+          <div class="card-screenshots">
+            <div class="card-screenshot"><img src="screenshots/snackable-pi-1.jpg" alt="Snackable PI hub screen"></div>
+            <div class="card-screenshot"><img src="screenshots/snackable-pi-2.jpg" alt="Snackable PI flow screen"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -737,6 +762,11 @@
             <span class="pill">103.5 ITC same-day conversion</span>
             <span class="pill">First lock-screen data approval at Intuit</span>
             <span class="pill">Featured in FY25 TV ads</span>
+          </div>
+          <!-- Screenshots: drop iPhone frames into /screenshots/ and update src -->
+          <div class="card-screenshots">
+            <div class="card-screenshot"><img src="screenshots/dynamic-island-1.jpg" alt="Dynamic Island lock screen"></div>
+            <div class="card-screenshot"><img src="screenshots/dynamic-island-2.jpg" alt="Live Activity expanded view"></div>
           </div>
         </div>
       </div>
@@ -940,24 +970,24 @@
 
   <div class="testimonials-anchor fade-up">
     <blockquote>"She managed the most aggressive mobile experimentation portfolio in CG this season. Her product judgment is consistently validated in-market."</blockquote>
-    <cite>Dan Williams — Director of Product Management, Intuit</cite>
+    <cite>Dan Williams — Group Product Management, Intuit</cite>
   </div>
 
   <div class="testimonials-grid">
     <div class="testimonial-card fade-up">
       <q>You've been an incredible partner to work with. Always supportive, yet honest when we try to build new, exciting things — which I truly appreciate. You're too good not to be here.</q>
       <div class="tc-name">Ashwith Atluri</div>
-      <div class="tc-role">Senior Staff PM, TurboTax</div>
+      <div class="tc-role"> Staff PM, TurboTax</div>
     </div>
     <div class="testimonial-card fade-up" style="transition-delay:.1s">
-      <q>It was a pleasure working together. I learned so much from you the last couple of years.</q>
-      <div class="tc-name">Limor Mazlin</div>
-      <div class="tc-role">Product Manager, Intuit</div>
+      <q>You are one of the best PMs, I had the opportunity to work with in my career.</q>
+      <div class="tc-name">Danish Ahmed Ansari</div>
+      <div class="tc-role">Engineering Manager, Intuit</div>
     </div>
     <div class="testimonial-card fade-up" style="transition-delay:.2s">
       <q>It was reassuring to have you as my PM partner. I certainly had a blast.</q>
       <div class="tc-name">Radley Dioso</div>
-      <div class="tc-role">Software Engineer, TurboTax Mobile</div>
+      <div class="tc-role">Designer, TurboTax Mobile</div>
     </div>
   </div>
 </section>
