@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Winnie Tsang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:     #faf7f2;
+      --cream-mid: #f2ece2;
+      --cream-dark:#e8dfd3;
+      --ink:       #1c1912;
+      --ink-mid:   #3d3830;
+      --muted:     #8a7f74;
+      --light:     #b0a699;
+      --rust:      #bf5130;
+      --rust-light:#f5ede8;
+      --border:    #e0d8ce;
+      --white:     #ffffff;
+      /* project card tints */
+      --c1: #e2ede6;
+      --c2: #f0e6df;
+      --c3: #e2eaf6;
+      --c4: #f5eedc;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      cursor: none;
+    }
+
+    /* ── CURSOR ── */
+    .cursor {
+      width: 10px; height: 10px;
+      background: var(--rust);
+      border-radius: 50%;
+      position: fixed; pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width .2s, height .2s, background .2s;
+    }
+    .cursor.hover { width: 36px; height: 36px; background: transparent; border: 1.5px solid var(--rust); }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 52px; height: 56px;
+      transition: background .3s, border-color .3s;
+    }
+    nav.scrolled {
+      background: rgba(250,247,242,.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; font-weight: 500; color: var(--ink);
+      text-decoration: none; letter-spacing: .02em;
+    }
+    nav ul { list-style: none; display: flex; gap: 8px; }
+    nav ul li a {
+      color: var(--muted); text-decoration: none; font-size: .82rem;
+      font-weight: 500; padding: 6px 12px; border-radius: 100px;
+      letter-spacing: .04em; text-transform: uppercase;
+      transition: background .15s, color .15s;
+    }
+    nav ul li a:hover { background: var(--cream-mid); color: var(--ink); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      padding: 100px 52px 80px;
+      display: grid; grid-template-columns: 1fr 340px;
+      gap: 80px; align-items: center;
+    }
+    .hero-left {}
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: .72rem; font-weight: 600; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 28px;
+    }
+    .hero-eyebrow::before {
+      content: ''; width: 24px; height: 1px; background: var(--light);
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.2rem, 6vw, 5.5rem);
+      font-weight: 400; color: var(--ink);
+      line-height: 1.08; letter-spacing: -.02em;
+      margin-bottom: 32px;
+    }
+    .hero h1 em { font-style: italic; color: var(--rust); }
+    .hero-bio {
+      font-size: 1rem; color: var(--ink-mid);
+      max-width: 500px; line-height: 1.8;
+      margin-bottom: 40px;
+    }
+    .hero-bio p { margin-bottom: 12px; }
+    .hero-bio p:last-child { margin-bottom: 0; }
+    .hero-links { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 24px; border-radius: 100px;
+      font-size: .85rem; font-weight: 500;
+      text-decoration: none; letter-spacing: .02em;
+      transition: all .2s;
+    }
+    .btn-primary {
+      background: var(--ink); color: var(--cream);
+    }
+    .btn-primary:hover { background: var(--rust); }
+    .btn-ghost {
+      border: 1px solid var(--border); color: var(--ink-mid);
+    }
+    .btn-ghost:hover { background: var(--cream-mid); border-color: var(--cream-dark); }
+
+    /* ── PHOTO ── */
+    .hero-photo {
+      position: relative;
+    }
+    .photo-frame {
+      width: 300px; height: 380px;
+      background: var(--cream-mid);
+      border-radius: 160px 160px 80px 80px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .photo-placeholder {
+      text-align: center; color: var(--light);
+      font-size: .8rem; letter-spacing: .06em;
+      text-transform: uppercase;
+      line-height: 1.6;
+    }
+    .photo-placeholder span { display: block; font-size: 2rem; margin-bottom: 8px; }
+    .photo-decoration {
+      position: absolute; bottom: -16px; right: -16px;
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: var(--rust-light);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .7rem; font-weight: 600; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--rust);
+      text-align: center; line-height: 1.3;
+    }
+
+    /* ── TICKER ── */
+    .ticker-wrap {
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--cream-mid);
+      padding: 14px 0;
+    }
+    .ticker-track {
+      display: flex; gap: 0;
+      animation: ticker 28s linear infinite;
+      white-space: nowrap;
+    }
+    .ticker-track:hover { animation-play-state: paused; }
+    .ticker-item {
+      display: flex; align-items: center; gap: 28px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem; font-style: italic; color: var(--muted);
+      padding-right: 28px;
+    }
+    .ticker-item strong { color: var(--ink); font-style: normal; font-weight: 500; }
+    .ticker-dot { color: var(--rust); font-size: .5rem; }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── STATS ── */
+    .stats-section {
+      padding: 80px 52px;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--border);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .stat-cell {
+      background: var(--cream); padding: 48px 36px;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity .6s, transform .6s;
+    }
+    .stat-cell.visible { opacity: 1; transform: translateY(0); }
+    .stat-cell:nth-child(2) { transition-delay: .1s; }
+    .stat-cell:nth-child(3) { transition-delay: .2s; }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4rem; font-weight: 300; color: var(--ink);
+      line-height: 1; letter-spacing: -.04em; margin-bottom: 8px;
+    }
+    .stat-suffix { font-size: 2.5rem; }
+    .stat-label { font-size: .8rem; color: var(--muted); line-height: 1.5; }
+
+    /* ── PRINCIPLES ── */
+    .principles-section {
+      padding: 80px 52px;
+      display: grid; grid-template-columns: 240px 1fr;
+      gap: 80px; align-items: start;
+      border-bottom: 1px solid var(--border);
+    }
+    .principles-label {
+      font-size: .72rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--muted);
+      padding-top: 4px;
+    }
+    .principle-list { display: flex; flex-direction: column; gap: 24px; }
+    .principle-row {
+      display: grid; grid-template-columns: 28px 1fr;
+      gap: 16px; align-items: baseline;
+      opacity: 0; transform: translateX(-12px);
+      transition: opacity .5s, transform .5s;
+    }
+    .principle-row.visible { opacity: 1; transform: translateX(0); }
+    .principle-row:nth-child(2) { transition-delay: .12s; }
+    .principle-row:nth-child(3) { transition-delay: .24s; }
+    .pnum {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; color: var(--light);
+    }
+    .ptext { font-size: .975rem; color: var(--ink-mid); line-height: 1.7; }
+    .ptext em { font-style: italic; color: var(--muted); }
+
+    /* ── WORK ── */
+    .work-section { padding: 80px 52px 40px; }
+    .work-header {
+      display: flex; align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 48px;
+    }
+    .work-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem; font-weight: 400; color: var(--ink);
+      letter-spacing: -.02em;
+    }
+    .work-count { font-size: .82rem; color: var(--muted); }
+
+    /* PROJECT CARDS */
+    .project-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 20px; margin-bottom: 20px;
+    }
+    .project-card {
+      border-radius: 16px;
+      overflow: hidden; cursor: pointer;
+      position: relative;
+      transition: transform .3s, box-shadow .3s;
+      opacity: 0; transform: translateY(24px);
+      transition: opacity .5s, transform .5s, box-shadow .3s;
+    }
+    .project-card.visible { opacity: 1; transform: translateY(0); }
+    .project-card:nth-child(2) { transition-delay: .1s; }
+    .project-card:nth-child(3) { transition-delay: .2s; }
+    .project-card:nth-child(4) { transition-delay: .3s; }
+    .project-card:hover { box-shadow: 0 20px 56px rgba(28,25,18,.12); transform: translateY(-4px) !important; }
+    .project-card.open { box-shadow: 0 20px 56px rgba(28,25,18,.15); }
+
+    .card-top {
+      padding: 36px 32px 32px;
+      position: relative; min-height: 220px;
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .card-c1 { background: var(--c1); }
+    .card-c2 { background: var(--c2); }
+    .card-c3 { background: var(--c3); }
+    .card-c4 { background: var(--c4); }
+
+    .card-label {
+      font-size: .7rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.55rem; font-weight: 500; color: var(--ink);
+      line-height: 1.25; letter-spacing: -.01em;
+      margin-bottom: auto;
+    }
+    .card-bottom {
+      display: flex; align-items: flex-end;
+      justify-content: space-between; margin-top: 24px;
+    }
+    .card-revenue {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; font-weight: 300; color: var(--ink);
+      line-height: 1; letter-spacing: -.04em;
+    }
+    .card-arrow {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(28,25,18,.08);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .9rem; transition: background .2s, transform .3s;
+    }
+    .project-card.open .card-arrow { transform: rotate(45deg); background: var(--ink); color: var(--cream); }
+
+    /* ACCORDION BODY */
+    .card-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height .5s cubic-bezier(.4,0,.2,1);
+      background: var(--white);
+    }
+    .project-card.open .card-body { max-height: 600px; }
+    .card-body-inner { padding: 28px 32px 32px; }
+    .card-insight {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic; font-size: 1.05rem; color: var(--ink-mid);
+      line-height: 1.65; margin-bottom: 18px;
+      padding-bottom: 18px; border-bottom: 1px solid var(--border);
+    }
+    .card-process { list-style: none; margin-bottom: 22px; display: flex; flex-direction: column; gap: 8px; }
+    .card-process li {
+      font-size: .85rem; color: var(--ink-mid);
+      padding-left: 18px; position: relative; line-height: 1.65;
+    }
+    .card-process li::before {
+      content: '→'; position: absolute; left: 0;
+      color: var(--rust); font-size: .75rem; top: 3px;
+    }
+    .card-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pill {
+      font-size: .75rem; font-weight: 500;
+      padding: 4px 12px; border-radius: 100px;
+      border: 1px solid var(--border);
+      color: var(--ink-mid); background: var(--cream);
+    }
+    .pill.strong { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+
+    /* ── MORE WINS ── */
+    .wins-section { padding: 0 52px 80px; }
+    .wins-section details {
+      border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden;
+    }
+    .wins-section summary {
+      padding: 18px 24px;
+      font-size: .85rem; font-weight: 600; color: var(--muted);
+      cursor: pointer; list-style: none;
+      display: flex; align-items: center; gap: 8px;
+      background: var(--cream);
+      transition: background .15s;
+    }
+    .wins-section summary:hover { background: var(--cream-mid); }
+    .wins-section summary::marker { display: none; }
+    .wins-section summary .arrow { margin-left: auto; transition: transform .3s; font-size: .75rem; }
+    .wins-section details[open] summary .arrow { transform: rotate(180deg); }
+    table { width: 100%; border-collapse: collapse; background: var(--white); }
+    table th {
+      text-align: left; padding: 10px 24px;
+      font-size: .7rem; font-weight: 600; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--muted);
+      border-bottom: 1px solid var(--border);
+    }
+    table td {
+      padding: 12px 24px; border-bottom: 1px solid var(--border);
+      font-size: .85rem; color: var(--ink-mid); vertical-align: top; line-height: 1.5;
+    }
+    table tr:last-child td { border-bottom: none; }
+    table td:first-child { font-weight: 500; color: var(--ink); }
+    .fy {
+      font-size: .7rem; background: var(--cream-mid);
+      color: var(--muted); padding: 2px 8px;
+      border-radius: 4px; font-weight: 600;
+    }
+
+    /* ── EXPERIENCE ── */
+    .exp-section {
+      padding: 80px 52px;
+      border-top: 1px solid var(--border);
+    }
+    .exp-header {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem; font-weight: 400; color: var(--ink);
+      letter-spacing: -.02em; margin-bottom: 48px;
+    }
+    .exp-list { display: flex; flex-direction: column; gap: 36px; }
+    .exp-item {
+      display: grid; grid-template-columns: 200px 1fr;
+      gap: 32px;
+      opacity: 0; transform: translateY(16px);
+      transition: opacity .5s, transform .5s;
+    }
+    .exp-item.visible { opacity: 1; transform: translateY(0); }
+    .exp-left {}
+    .exp-date { font-size: .78rem; color: var(--muted); margin-bottom: 2px; }
+    .exp-role { font-size: .9rem; font-weight: 600; color: var(--ink); line-height: 1.3; margin-bottom: 2px; }
+    .exp-co { font-size: .82rem; color: var(--rust); font-weight: 500; }
+    .exp-right {}
+    .exp-desc { font-size: .875rem; color: var(--ink-mid); margin-bottom: 14px; line-height: 1.7; }
+    .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .exp-bullets li {
+      font-size: .85rem; color: var(--ink-mid);
+      padding-left: 16px; position: relative; line-height: 1.65;
+    }
+    .exp-bullets li::before {
+      content: '·'; position: absolute; left: 4px;
+      color: var(--light); font-size: 1.2rem; line-height: 1.3;
+    }
+
+    /* ── SKILLS ── */
+    .skills-section {
+      padding: 80px 52px;
+      background: var(--cream-mid);
+      border-top: 1px solid var(--border);
+    }
+    .skills-header {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem; font-weight: 400; color: var(--ink);
+      letter-spacing: -.02em; margin-bottom: 40px;
+    }
+    .skills-grid { display: flex; flex-direction: column; gap: 18px; }
+    .skill-row { display: grid; grid-template-columns: 120px 1fr; gap: 20px; align-items: start; }
+    .skill-label { font-size: .75rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); padding-top: 5px; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .stag {
+      font-size: .78rem; padding: 4px 12px; border-radius: 100px;
+      background: var(--cream); border: 1px solid var(--border);
+      color: var(--ink-mid); font-weight: 500;
+    }
+
+    /* ── COMMUNITY ── */
+    .community-section {
+      padding: 80px 52px;
+      border-top: 1px solid var(--border);
+      display: grid; grid-template-columns: 240px 1fr;
+      gap: 80px;
+    }
+    .community-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem; font-weight: 400; color: var(--ink);
+      letter-spacing: -.02em; line-height: 1.15; align-self: start;
+    }
+    .community-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .community-card {
+      padding: 24px; border: 1px solid var(--border);
+      border-radius: 12px; background: var(--cream-mid);
+      transition: background .15s;
+    }
+    .community-card:hover { background: var(--cream-dark); }
+    .community-card .icon { font-size: 1.25rem; margin-bottom: 10px; }
+    .community-card h4 { font-size: .9rem; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+    .community-card p { font-size: .8rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 80px 52px 56px;
+      background: var(--ink);
+      text-align: center;
+    }
+    footer h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 300; color: var(--cream);
+      letter-spacing: -.03em; line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    footer h2 em { font-style: italic; color: var(--rust); }
+    footer p { font-size: .9rem; color: var(--light); margin-bottom: 36px; }
+    .footer-links { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 52px; }
+    .footer-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 20px; border-radius: 100px;
+      border: 1px solid rgba(255,255,255,.2);
+      font-size: .85rem; font-weight: 500; color: var(--cream);
+      text-decoration: none; transition: all .2s;
+      letter-spacing: .02em;
+    }
+    .footer-link:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.4); }
+    .footer-copy { font-size: .75rem; color: var(--light); opacity: .5; }
+
+    /* ── FADE-IN OBSERVER ── */
+    .fade-up {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity .6s, transform .6s;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      body { cursor: auto; }
+      .cursor { display: none; }
+      nav { padding: 0 24px; }
+      nav ul { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; gap: 40px; min-height: auto; }
+      .hero-photo { display: none; }
+      .stats-section { grid-template-columns: 1fr; }
+      .principles-section { grid-template-columns: 1fr; gap: 24px; padding: 60px 24px; }
+      .work-section, .wins-section, .exp-section, .skills-section { padding-left: 24px; padding-right: 24px; }
+      .project-grid { grid-template-columns: 1fr; }
+      .exp-item { grid-template-columns: 1fr; gap: 8px; }
+      .community-section { grid-template-columns: 1fr; gap: 24px; padding: 60px 24px; }
+      .community-grid { grid-template-columns: 1fr; }
+      footer { padding: 60px 24px 40px; }
+      .skill-row { grid-template-columns: 1fr; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-name">Winnie Tsang</a>
+  <ul>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Senior Staff PM · Toronto, ON</div>
+    <h1>I build<br>mobile products<br>that <em>convert</em>.</h1>
+    <div class="hero-bio">
+      <p>Most mobile tax experiences are websites inside an app. I spent 4.5 years changing that at TurboTax.</p>
+      <p>I led TurboTax Mobile as the flagship PM — US and Canada. <strong>$34M+ in incremental revenue.</strong> A GED experiment I ran became a $4.3M feature in a TurboTax TV ad. The redesign I shipped became the first feature in TT history to go mobile-first all the way to stationary web. I doubled Canada's mobile market share by making a call nobody had made before.</p>
+      <p>Now I'm co-leading the initiative to make PMs 3× more productive with AI. Looking for my next GPM role.</p>
+    </div>
+    <div class="hero-links">
+      <a href="mailto:winnie_tsang@intuit.com" class="btn btn-primary">Get in touch →</a>
+      <a href="https://linkedin.com/in/winnietsang" target="_blank" class="btn btn-ghost">LinkedIn</a>
+    </div>
+  </div>
+  <div class="hero-photo">
+    <div class="photo-frame">
+      <div class="photo-placeholder">
+        <span>📸</span>
+        Add your<br>photo here
+      </div>
+    </div>
+    <div class="photo-decoration">Toronto,<br>ON</div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <!-- repeated twice for seamless loop -->
+    <div class="ticker-item"><strong>Snackable PI</strong> <span class="ticker-dot">●</span></div>
+    <div class="ticker-item">$6.4M incremental revenue <span class="ticker-dot">●</span></div>
+    <div class="ticker-item"><strong>Race Mode Dynamic Island</strong> <span class="ticker-dot">●</span></div>
+    <div class="ticker-item">$4.3M · Featured in TT TV ad <span class="ticker-dot">●</span></div>
+    <div class="ticker-item"><strong>Spanish Enablement</strong> <span class="ticker-dot">●</span></div>
+    <div class="ticker-item">$3.3M · 160 Index vs. English <span class="ticker-dot">●</span></div>
+    <div class="ticker-item"><strong>3× AI PDLC</strong> <span class="ticker-dot">●</span></div>
+    <div class="ticker-item">CGPM Open Market · Beta May 2026 <span class="ticker-dot">●</span></div>
+    <div class="ticker-item"><strong>Canada mWeb → mApp</strong> <span class="ticker-dot">●</span></div>
+    <div class="ticker-item">TT Canadian mobile share doubled <span class="ticker-dot">●</span></div>
+    <!-- duplicate -->
+    <div class="ticker-item"><strong>Snackable PI</strong> <span class="ticker-dot">●</span></div>
+    <div class="ticker-item">$6.4M incremental revenue <span class="ticker-dot">●</span></div>
+    <div class="ticker-item"><strong>Race Mode Dynamic Island</strong> <span class="ticker-dot">●</span></div>
+    <div class="ticker-item">$4.3M · Featured in TT TV ad <span class="ticker-dot">●</span></div>
+    <div class="ticker-item"><strong>Spanish Enablement</strong> <span class="ticker-dot">●</span></div>
+    <div class="ticker-item">$3.3M · 160 Index vs. English <span class="ticker-dot">●</span></div>
+    <div class="ticker-item"><strong>3× AI PDLC</strong> <span class="ticker-dot">●</span></div>
+    <div class="ticker-item">CGPM Open Market · Beta May 2026 <span class="ticker-dot">●</span></div>
+    <div class="ticker-item"><strong>Canada mWeb → mApp</strong> <span class="ticker-dot">●</span></div>
+    <div class="ticker-item">TT Canadian mobile share doubled <span class="ticker-dot">●</span></div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-section">
+  <div class="stat-cell">
+    <div class="stat-num"><span class="counter" data-target="34">0</span><span class="stat-suffix">M+</span></div>
+    <div class="stat-label">Incremental revenue<br>FY24–FY25</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-num"><span class="counter" data-target="2">0</span><span class="stat-suffix">×</span></div>
+    <div class="stat-label">TurboTax Canadian<br>mobile market share</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-num"><span class="counter" data-target="3">0</span><span class="stat-suffix">×</span></div>
+    <div class="stat-label">PM productivity — AI<br>PDLC initiative, FY26</div>
+  </div>
+</div>
+
+<!-- PRINCIPLES -->
+<div class="principles-section">
+  <div class="principles-label">How I think<br>about mobile</div>
+  <div class="principle-list">
+    <div class="principle-row">
+      <span class="pnum">01</span>
+      <span class="ptext">The app competes with everything on the lock screen. <em>Earn the attention — don't assume it.</em></span>
+    </div>
+    <div class="principle-row">
+      <span class="pnum">02</span>
+      <span class="ptext">Native beats webview. The OS gives you Dynamic Island, App Clips, Live Activities, on-device AI. <em>Use them.</em></span>
+    </div>
+    <div class="principle-row">
+      <span class="pnum">03</span>
+      <span class="ptext">The architecture POC matters. The customer prototype test matters more. <em>Ship → measure → iterate.</em></span>
+    </div>
+  </div>
+</div>
+
+<!-- WORK -->
+<section class="work-section" id="work">
+  <div class="work-header">
+    <div class="work-title">Featured work</div>
+    <div class="work-count">4 projects</div>
+  </div>
+
+  <div class="project-grid">
+
+    <!-- 1: Snackable PI -->
+    <div class="project-card" onclick="toggleCard(this)">
+      <div class="card-top card-c1">
+        <div>
+          <div class="card-label">Snackable PI · FY24</div>
+          <div class="card-title">First mobile-first feature to scale to stationary web in TT history</div>
+        </div>
+        <div class="card-bottom">
+          <div class="card-revenue">$6.4M</div>
+          <div class="card-arrow">+</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="card-insight">"The problem wasn't the tax questions. It was 50 screens with endless Continue buttons — it felt impossible to make progress in one sitting."</div>
+          <ul class="card-process">
+            <li>Led a 3-month architecture POC — the first time TTM attempted to dictate its own tax-prep experience</li>
+            <li>Prototype-tested with 10 customers before committing to the MVP design. Research ruled out two options.</li>
+            <li>Two-phase launch: MVP de-risks the hub-and-spoke model, v2 redesigns the individual flows</li>
+            <li>Wrote a data deep-dive to re-explain the post-launch YoY data — hub-and-spoke means customers travel different screen paths, so flat-looking metrics weren't flat</li>
+          </ul>
+          <div class="card-pills">
+            <span class="pill strong">$6.4M</span>
+            <span class="pill">103.9 ITC S2C — mApp + mWeb</span>
+            <span class="pill">PI abandonment –2% on mApp</span>
+            <span class="pill">Tax Home: 104.7 ITC first-day conversion</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2: Dynamic Island -->
+    <div class="project-card" onclick="toggleCard(this)">
+      <div class="card-top card-c2">
+        <div>
+          <div class="card-label">Dynamic Island / Live Activity · FY24</div>
+          <div class="card-title">GED experiment → $4.3M → TurboTax TV ad</div>
+        </div>
+        <div class="card-bottom">
+          <div class="card-revenue">$4.3M</div>
+          <div class="card-arrow">+</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="card-insight">"Mobile filers are the most distracted. Once they leave the app, they forget they had taxes open. Push notifications expire. I needed the progress to follow them out."</div>
+          <ul class="card-process">
+            <li>Took a GED experiment to production — first to use iOS 16.1 Dynamic Island APIs at Intuit</li>
+            <li>Customer research validated what to surface: progress-stage metaphor beat dollar amount display</li>
+            <li>Navigated ITAD security approval for tax-session data on the lock screen — a new data class, never done before</li>
+            <li>Halo: Full Service TTM saw the win and shipped their own version — now in a TT marketing TV ad</li>
+          </ul>
+          <div class="card-pills">
+            <span class="pill strong">$4.3M</span>
+            <span class="pill">101.5 ITC S2C</span>
+            <span class="pill">103.5 ITC same-day conversion</span>
+            <span class="pill">First lock-screen data approval at Intuit</span>
+            <span class="pill">Featured in FY25 TV ads</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3: Spanish -->
+    <div class="project-card" onclick="toggleCard(this)">
+      <div class="card-top card-c3">
+        <div>
+          <div class="card-label">Spanish Enablement · FY24</div>
+          <div class="card-title">Highest mobile start rate of any segment — couldn't file in Spanish</div>
+        </div>
+        <div class="card-bottom">
+          <div class="card-revenue">$3.3M</div>
+          <div class="card-arrow">+</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="card-insight">"This wasn't a product problem. It was a coordination problem — 5 core teams, 10+ widget teams, each owning a fragment of the locale stack."</div>
+          <ul class="card-process">
+            <li>Mapped every locale-passing dependency before writing a single requirement</li>
+            <li>Aligned 5 core + 10+ widget teams — because a language switch that works in one layer but not another is worse than no switch</li>
+            <li>Set expectations with the Spanish web PM on where app and web behavior would legitimately differ, backed by customer research</li>
+            <li>Full D4D double-diamond on language-switching UX — including how to honestly communicate partial Spanish coverage</li>
+          </ul>
+          <div class="card-pills">
+            <span class="pill strong">$3.3M</span>
+            <span class="pill">50% of Spanish starts on mobile app</span>
+            <span class="pill">Start mix: 160 Index vs. English</span>
+            <span class="pill">PRS 84 — 124 Index vs. English</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4: 3x AI -->
+    <div class="project-card" onclick="toggleCard(this)">
+      <div class="card-top card-c4">
+        <div>
+          <div class="card-label">3× AI PDLC · FY26</div>
+          <div class="card-title">Making PMs 3× more productive with AI — building the marketplace to do it</div>
+        </div>
+        <div class="card-bottom">
+          <div class="card-revenue" style="font-size:1.3rem; line-height:1.2;">Beta<br>May '26</div>
+          <div class="card-arrow">+</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="card-insight">"PMs spend most of their time on the work around the work — writing PRDs, synthesizing research, drafting specs. That's the highest-leverage problem AI should solve first."</div>
+          <ul class="card-process">
+            <li>Co-built the CGPM Open Market with Ryan Brown — internal AI skills, agents, and connectors marketplace for the full CG PM org</li>
+            <li>Shipped @product-agent: auto-generates PRDs and briefs from a prompt. Cuts first-draft time from hours to minutes.</li>
+            <li>Shipped a customer-research insight agent: synthesizes raw interview transcripts into structured findings</li>
+            <li>Presented the 3× PM Productivity framework to CG leadership alongside Keela Robison and Will Jang (April 2026)</li>
+          </ul>
+          <div class="card-pills">
+            <span class="pill strong">3× PM productivity — north star</span>
+            <span class="pill">Hundreds of CG PMs onboarded</span>
+            <span class="pill">@product-agent shipped</span>
+            <span class="pill">Research insight agent shipped</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /project-grid -->
+</section>
+
+<!-- MORE WINS -->
+<section class="wins-section">
+  <details>
+    <summary>
+      + More work <span class="arrow">↓</span>
+    </summary>
+    <table>
+      <thead><tr><th>Initiative</th><th>Result</th><th></th></tr></thead>
+      <tbody>
+        <tr><td>Native Player — PI + Wages &amp; Income</td><td>$10M annualized · 102 ITC S2C · 30% faster rendering · 10% lower abandonment</td><td><span class="fy">FY25</span></td></tr>
+        <tr><td>Canada mWeb → mApp Hard-Block</td><td>TT Canadian mobile share doubled · 105 ITPY A2S &amp; S2C · +183 ITPY starts</td><td><span class="fy">FY25</span></td></tr>
+        <tr><td>mWeb → mApp Banner + Personalization + SSO</td><td>101 S2C / 102 RPV (Bayes winner) · 30.8% migration · +12% S2C lift</td><td><span class="fy">FY25</span></td></tr>
+        <tr><td>App Clip — First Apple Secure Storage at Intuit</td><td>105 ITC T2A · First ITAD approval for on-device data</td><td><span class="fy">FY25</span></td></tr>
+        <tr><td>iOS Remote Start Live Activity</td><td>First remote-triggered Live Activity at Intuit · 101.4 ITC S2C</td><td><span class="fy">FY26</span></td></tr>
+        <tr><td>Native Tax Home iOS</td><td>102 ITC S2C / 104 ITC RPV</td><td><span class="fy">FY25</span></td></tr>
+        <tr><td>TTM Canada (sole PM)</td><td>21% YoY growth · App Store 4.6 / 4.7 sustained</td><td><span class="fy">FY24</span></td></tr>
+      </tbody>
+    </table>
+  </details>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="exp-section" id="experience">
+  <div class="exp-header">Experience</div>
+  <div class="exp-list">
+    <div class="exp-item fade-up">
+      <div class="exp-left">
+        <div class="exp-date">Feb 2025 – May 2026</div>
+        <div class="exp-role">Senior Staff PM,<br>TurboTax Mobile</div>
+        <div class="exp-co">Intuit · Promoted</div>
+      </div>
+      <div class="exp-right">
+        <p class="exp-desc">Delivered $20M+ incremental revenue across 5 new mobile experiences. Acting product lead for TTM after manager's mobility move — led EOS learnings, FY26 strategy, and capacity planning across all three peaks for the full x-functional team (PD, XD, Data, TPM). FY25 rating: High Achieves.</p>
+        <ul class="exp-bullets">
+          <li>Doubled TurboTax's share of Canadian mobile filings via mWeb → mApp hard-block</li>
+          <li>Authored FY25 Native Mobile App Strategy; led x-functional buy-in and program kickoff</li>
+          <li>Co-leading CGPM Open Market: internal AI agents marketplace for the CG PM org</li>
+          <li>Mentored PM intern — ranked me top-2 manager of his career across all roles</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item fade-up" style="transition-delay:.12s">
+      <div class="exp-left">
+        <div class="exp-date">Mar 2022 – Feb 2025</div>
+        <div class="exp-role">Staff PM,<br>TurboTax Mobile</div>
+        <div class="exp-co">Intuit</div>
+      </div>
+      <div class="exp-right">
+        <p class="exp-desc">Started as sole PM for TTM Canada, expanded to US Flagship. Delivered $14M — 42% of finance-projected mobile revenue — in FY24.</p>
+        <ul class="exp-bullets">
+          <li>Snackable PI: $6.4M — first mobile-first feature to scale to stationary web in TT history</li>
+          <li>Race Mode Dynamic Island: $4.3M — GED project to production to TT TV ad</li>
+          <li>Spanish enablement: $3.3M — aligned 5 core + 10+ widget teams</li>
+          <li>App Clip: 105 ITC T2A — first Apple Secure Storage approval inside Intuit</li>
+          <li>Authored Mobile Experience Principles for TurboTax — SLT + PD alignment</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills-section">
+  <div class="skills-header">Skills</div>
+  <div class="skills-grid">
+    <div class="skill-row">
+      <div class="skill-label">Product</div>
+      <div class="skill-tags">
+        <span class="stag">Mobile-native iOS + Android</span>
+        <span class="stag">A/B experimentation</span>
+        <span class="stag">Customer research</span>
+        <span class="stag">Conversion optimization</span>
+        <span class="stag">Mobile growth</span>
+        <span class="stag">Multi-market launch</span>
+        <span class="stag">AI feature productization</span>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-label">Technical</div>
+      <div class="skill-tags">
+        <span class="stag">Dynamic Experiences / Player</span>
+        <span class="stag">Native Player enablement</span>
+        <span class="stag">App Clip · Live Activity · Dynamic Island</span>
+        <span class="stag">OINP / Braze</span>
+        <span class="stag">ITAD security review</span>
+        <span class="stag">Apple Secure Storage</span>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-label">AI &amp; Process</div>
+      <div class="skill-tags">
+        <span class="stag">Claude agents</span>
+        <span class="stag">Figma Make</span>
+        <span class="stag">NotebookLM</span>
+        <span class="stag">D4D — Innovation Catalyst L2</span>
+        <span class="stag">X-functional program leadership</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMUNITY -->
+<section class="community-section">
+  <div class="community-label">Community<br>&amp;<br>leadership</div>
+  <div class="community-grid">
+    <div class="community-card fade-up">
+      <div class="icon">🧪</div>
+      <h4>Innovation Catalyst L2</h4>
+      <p>TTM team champion. 3 GED projects, 2 productized: Dynamic Island ($4.3M) and App Clip (105 ITC). Facilitated GenAI-boosted D4D sessions.</p>
+    </div>
+    <div class="community-card fade-up" style="transition-delay:.1s">
+      <div class="icon">👩‍💼</div>
+      <h4>Women in Product</h4>
+      <p>Online community lead. Introduced Coffee Roulette and water-cooler Slack integrations. 50%+ meeting rate sustained across 8 months.</p>
+    </div>
+    <div class="community-card fade-up" style="transition-delay:.2s">
+      <div class="icon">🎓</div>
+      <h4>Mentorship</h4>
+      <p>PM intern (Canada, FY25) ranked me top-2 manager of his career. Coached Rotman MBA case-competition teams — one team won.</p>
+    </div>
+    <div class="community-card fade-up" style="transition-delay:.3s">
+      <div class="icon">🦈</div>
+      <h4>CG Shark Tank — Top 10</h4>
+      <p>Tax Trivia gamification concept. Selected top-10, presented to SLT.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <h2>Let's build<br>something <em>great.</em></h2>
+  <p>Open to Sr. Staff / Principal PM, Group PM, and Head of Product roles in consumer mobile, fintech, and AI.</p>
+  <div class="footer-links">
+    <a href="mailto:winnie_tsang@intuit.com" class="footer-link">✉ winnie_tsang@intuit.com</a>
+    <a href="https://linkedin.com/in/winnietsang" target="_blank" class="footer-link">in LinkedIn</a>
+    <span style="color:rgba(176,166,153,.5); font-size:.85rem; display:flex; align-items:center;">📍 Toronto, ON</span>
+  </div>
+  <div class="footer-copy">© 2026 Winnie Tsang</div>
+</footer>
+
+<script>
+  // ── CURSOR ──
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top  = e.clientY + 'px';
+  });
+  document.querySelectorAll('a, button, .project-card, summary').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+  });
+
+  // ── NAV SCROLL ──
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // ── INTERSECTION OBSERVER ──
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll(
+    '.stat-cell, .principle-row, .project-card, .exp-item, .fade-up'
+  ).forEach(el => observer.observe(el));
+
+  // ── ANIMATED COUNTERS ──
+  const counterObs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const target = parseInt(el.dataset.target);
+      const duration = 1200;
+      const start = performance.now();
+      const tick = now => {
+        const progress = Math.min((now - start) / duration, 1);
+        const ease = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.floor(ease * target);
+        if (progress < 1) requestAnimationFrame(tick);
+        else el.textContent = target;
+      };
+      requestAnimationFrame(tick);
+      counterObs.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.counter').forEach(el => counterObs.observe(el));
+
+  // ── PROJECT CARD TOGGLE ──
+  function toggleCard(card) {
+    const wasOpen = card.classList.contains('open');
+    document.querySelectorAll('.project-card').forEach(c => c.classList.remove('open'));
+    if (!wasOpen) card.classList.add('open');
+  }
+</script>
+</body>
+</html>
