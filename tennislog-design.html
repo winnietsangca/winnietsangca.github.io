@@ -1031,7 +1031,7 @@
           <div class="shot-btn you">Ace</div>
           <div class="shot-btn you">FH Winner</div>
           <div class="shot-btn you">BH Winner</div>
-          <div class="shot-btn neutral">Their Error</div>
+          <div class="shot-btn you">Vol / OH</div>
         </div>
         <div class="w-skip">↓ wrist down to skip</div>
       </div>
@@ -1042,19 +1042,20 @@
   <!-- Shot type — they won (tap mode) -->
   <div class="screen-wrapper">
     <div class="watch">
-      <div class="watch-screen">
-        <div class="w-header-row">
+      <div class="watch-screen" style="padding:14px 12px;">
+        <div class="w-header-row" style="margin-top:10px;">
           <div class="w-point-lbl them">THEIR POINT</div>
           <div class="w-how">Your error?</div>
-          <div class="w-timer">8</div>
+          <div class="w-timer" style="font-size:13px;margin-bottom:3px;">8</div>
         </div>
-        <div class="shot-grid">
-          <div class="shot-btn them">FH Net</div>
-          <div class="shot-btn them">FH Out</div>
-          <div class="shot-btn them">BH Net</div>
-          <div class="shot-btn them">BH Out</div>
+        <div class="shot-grid" style="gap:4px;">
+          <div class="shot-btn them" style="padding:7px 4px;">FH Net</div>
+          <div class="shot-btn them" style="padding:7px 4px;">FH Out</div>
+          <div class="shot-btn them" style="padding:7px 4px;">BH Net</div>
+          <div class="shot-btn them" style="padding:7px 4px;">BH Out</div>
         </div>
-        <div class="w-skip">↑ crown = their winner</div>
+        <div class="shot-btn them" style="margin-top:4px;border-radius:10px;padding:7px;text-align:center;font-size:9px;font-weight:800;">Vol / OH</div>
+        <div class="w-skip" style="margin-top:3px;">↑ crown = their winner</div>
       </div>
     </div>
     <div class="screen-label">Shot type — they won</div>
@@ -1120,11 +1121,19 @@
   <div class="voice-rows">
     <div class="voice-row">
       <div class="voice-cmd">"point me, ace"</div>
-      <div><div class="voice-desc">Your point · Ace logged · First serve in</div></div>
+      <div><div class="voice-desc">Your point · Ace · First serve in</div></div>
     </div>
     <div class="voice-row">
       <div class="voice-cmd">"point me, forehand winner"</div>
-      <div><div class="voice-desc">Your point · FH winner</div></div>
+      <div><div class="voice-desc">Your point · FH groundstroke winner</div></div>
+    </div>
+    <div class="voice-row">
+      <div class="voice-cmd">"point me, backhand winner"</div>
+      <div><div class="voice-desc">Your point · BH groundstroke winner</div></div>
+    </div>
+    <div class="voice-row">
+      <div class="voice-cmd">"point me, volley" / "overhead"</div>
+      <div><div class="voice-desc">Your point · Net play / overhead winner</div></div>
     </div>
     <div class="voice-row">
       <div class="voice-cmd">"point me, their error"</div>
@@ -1136,15 +1145,19 @@
     </div>
     <div class="voice-row">
       <div class="voice-cmd">"double fault"</div>
-      <div><div class="voice-desc">Their point · Double fault logged</div></div>
+      <div><div class="voice-desc">Their point · DF logged (voice-only in both modes)</div></div>
     </div>
     <div class="voice-row">
       <div class="voice-cmd">"point them, forehand net"</div>
-      <div><div class="voice-desc">Their point · Your FH unforced error into net</div></div>
+      <div><div class="voice-desc">Their point · Your FH error into net</div></div>
     </div>
     <div class="voice-row">
       <div class="voice-cmd">"point them, backhand out"</div>
       <div><div class="voice-desc">Their point · Your BH error long/wide</div></div>
+    </div>
+    <div class="voice-row">
+      <div class="voice-cmd">"point them, volley error"</div>
+      <div><div class="voice-desc">Their point · Your volley or overhead error</div></div>
     </div>
     <div class="voice-row">
       <div class="voice-cmd">"undo"</div>
@@ -1158,18 +1171,26 @@
   <div class="voice-rows">
     <div class="voice-row">
       <div class="voice-cmd">"point me"</div>
-      <div><div class="voice-desc">Score updates → Watch shows 4 shot-type buttons for 8s</div></div>
+      <div><div class="voice-desc">Score updates → Watch shows: Ace / FH / BH / Vol–OH (4 buttons, 8s)</div></div>
     </div>
     <div class="voice-row">
       <div class="voice-cmd">"point them"</div>
-      <div><div class="voice-desc">Score updates → Watch shows FH/BH net/out for 8s</div></div>
+      <div><div class="voice-desc">Score updates → Watch shows: FH Net / FH Out / BH Net / BH Out / Vol–OH (5 buttons, 8s)</div></div>
     </div>
     <div class="voice-row">
       <div class="voice-cmd">"fault"</div>
-      <div><div class="voice-desc">Same in both modes — first serve fault</div></div>
+      <div><div class="voice-desc">Same in both modes — first serve fault, listening resumes</div></div>
     </div>
     <div class="voice-row">
-      <div class="voice-cmd">Wrist down / timeout</div>
+      <div class="voice-cmd">"double fault"</div>
+      <div><div class="voice-desc">Voice-only in both modes — skips tap screen entirely</div></div>
+    </div>
+    <div class="voice-row">
+      <div class="voice-cmd">Crown scroll (Mode B)</div>
+      <div><div class="voice-desc">Their winner — no tap needed, dismisses shot screen</div></div>
+    </div>
+    <div class="voice-row">
+      <div class="voice-cmd">Wrist down / 8s timeout</div>
       <div><div class="voice-desc">Shot type skipped · Point logged as "unclassified"</div></div>
     </div>
   </div>
