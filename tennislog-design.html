@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TennisLog — UI Design Mockup</title>
+  <style>
+    :root {
+      --bg: #070B13;
+      --surface: #111827;
+      --surface2: #1C2638;
+      --surface3: #243048;
+      --accent: #C8F731;
+      --accent-dim: rgba(200, 247, 49, 0.12);
+      --accent-border: rgba(200, 247, 49, 0.25);
+      --alert: #FF6835;
+      --alert-dim: rgba(255, 104, 53, 0.1);
+      --alert-border: rgba(255, 104, 53, 0.3);
+      --win: #4ADE80;
+      --lose: #F87171;
+      --blue: #60A5FA;
+      --text: #F0F4FF;
+      --text2: #8B9AB8;
+      --text3: #3D4F6E;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+      color: var(--text);
+      padding: 48px 32px 80px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Brand Header ── */
+    .brand {
+      text-align: center;
+      padding: 40px 0 64px;
+    }
+    .brand-wordmark {
+      font-size: 56px;
+      font-weight: 900;
+      letter-spacing: -3px;
+      line-height: 1;
+    }
+    .brand-wordmark .hl { color: var(--accent); }
+    .brand-tagline {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--text2);
+      margin-top: 10px;
+    }
+
+    /* ── Section titles ── */
+    .section {
+      margin: 64px 0 28px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--surface2);
+    }
+    .section-title {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text3);
+    }
+    .section-sub {
+      font-size: 13px;
+      color: var(--text2);
+      margin-top: 4px;
+    }
+
+    /* ── Color swatches ── */
+    .swatches {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .swatch {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .swatch-circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .swatch-name {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--text2);
+      text-align: center;
+    }
+    .swatch-hex {
+      font-size: 9px;
+      color: var(--text3);
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+
+    /* ── Screen rows ── */
+    .screens-row {
+      display: flex;
+      gap: 28px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+    .screen-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+    .screen-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text3);
+    }
+
+    /* ── iPhone Frame ── */
+    .iphone {
+      width: 310px;
+      height: 672px;
+      background: var(--surface);
+      border-radius: 46px;
+      border: 2px solid #1A2540;
+      overflow: hidden;
+      position: relative;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.04),
+        0 32px 80px rgba(0,0,0,0.7),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+    .iphone-notch {
+      width: 110px;
+      height: 28px;
+      background: #070B13;
+      border-radius: 0 0 18px 18px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 10;
+    }
+    .iphone-screen {
+      height: calc(100% - 28px);
+      overflow-y: auto;
+      scrollbar-width: none;
+      padding-bottom: 84px;
+      background: var(--bg);
+    }
+    .iphone-screen::-webkit-scrollbar { display: none; }
+
+    /* ── Status bar ── */
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 22px 4px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .status-icons { font-size: 10px; letter-spacing: 2px; }
+
+    /* ── Tab bar ── */
+    .tab-bar {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 82px;
+      background: rgba(7, 11, 19, 0.96);
+      backdrop-filter: blur(24px);
+      border-top: 1px solid var(--surface2);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 0 8px 18px;
+    }
+    .tab { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+    .tab-icon { font-size: 21px; line-height: 1; }
+    .tab-text { font-size: 9px; font-weight: 600; letter-spacing: 0.3px; color: var(--text3); }
+    .tab.active .tab-text { color: var(--accent); }
+    .tab.active .tab-icon { filter: drop-shadow(0 0 6px rgba(200,247,49,0.6)); }
+
+    /* ── Page header ── */
+    .page-header { padding: 10px 20px 6px; }
+    .page-title { font-size: 24px; font-weight: 900; letter-spacing: -0.8px; }
+    .page-subtitle { font-size: 12px; color: var(--text2); margin-top: 3px; }
+
+    /* ── Cards ── */
+    .card { background: var(--surface2); border-radius: 18px; margin: 6px 16px; }
+    .card-inner { padding: 16px; }
+
+    .card-label {
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--text3);
+      padding: 12px 20px 4px;
+    }
+
+    /* ── Streak card ── */
+    .streak-card {
+      background: linear-gradient(130deg, rgba(200,247,49,0.1) 0%, rgba(200,247,49,0.03) 100%);
+      border: 1px solid var(--accent-border);
+      border-radius: 18px;
+      padding: 18px;
+      margin: 8px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .streak-big {
+      font-size: 52px;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      letter-spacing: -2px;
+    }
+    .streak-lbl {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-top: 4px;
+    }
+    .streak-best { font-size: 10px; color: var(--text2); margin-top: 4px; }
+    .week-dots { display: flex; gap: 5px; margin-top: 4px; }
+    .dot {
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; font-weight: 800;
+    }
+    .dot.played { background: var(--accent); color: #070B13; }
+    .dot.today { border: 2px solid var(--accent); color: var(--accent); background: transparent; }
+    .dot.empty { background: var(--surface3); color: var(--text3); }
+    .week-label {
+      font-size: 8px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--text3);
+      text-align: center; margin-bottom: 6px;
+    }
+
+    /* ── Alert card ── */
+    .alert-card {
+      background: var(--alert-dim);
+      border: 1px solid var(--alert-border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin: 5px 16px;
+    }
+    .alert-row { display: flex; align-items: center; gap: 8px; }
+    .alert-pip { width: 7px; height: 7px; border-radius: 50%; background: var(--alert); flex-shrink: 0; }
+    .alert-name { font-size: 13px; font-weight: 700; }
+    .alert-detail { font-size: 11px; color: var(--alert); margin-top: 3px; padding-left: 15px; font-weight: 600; }
+
+    /* ── Session card ── */
+    .session-card {
+      background: var(--surface2);
+      border-radius: 18px;
+      padding: 16px;
+      margin: 6px 16px;
+    }
+    .session-top { display: flex; justify-content: space-between; align-items: flex-start; }
+    .type-pill {
+      font-size: 9px; font-weight: 800; letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 10px; border-radius: 7px;
+    }
+    .type-pill.match { background: var(--accent-dim); color: var(--accent); border: 1px solid var(--accent-border); }
+    .type-pill.practice { background: rgba(96,165,250,0.1); color: var(--blue); border: 1px solid rgba(96,165,250,0.25); }
+    .session-date { font-size: 11px; color: var(--text2); }
+    .session-score { font-size: 22px; font-weight: 900; margin-top: 10px; letter-spacing: -0.5px; }
+    .win-tag { color: var(--win); }
+    .loss-tag { color: var(--lose); }
+    .session-stats { display: flex; gap: 14px; margin-top: 8px; }
+    .sstat { font-size: 11px; color: var(--text2); }
+    .sstat b { color: var(--text); font-weight: 700; }
+    .stars { font-size: 12px; color: var(--accent); margin-top: 8px; letter-spacing: 1px; }
+
+    /* ── Start button ── */
+    .start-btn {
+      background: var(--accent);
+      color: #070B13;
+      border-radius: 16px;
+      padding: 18px;
+      margin: 10px 16px 6px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    /* ── Session start screen ── */
+    .type-grid { display: flex; gap: 8px; margin: 10px 16px; }
+    .type-btn {
+      flex: 1; border-radius: 18px; padding: 22px 12px;
+      text-align: center; cursor: pointer;
+    }
+    .type-btn .type-icon { font-size: 32px; display: block; margin-bottom: 10px; }
+    .type-btn .type-name { font-size: 13px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; }
+    .type-btn.match-btn { background: var(--accent); color: #070B13; }
+    .type-btn.practice-btn { background: var(--surface2); color: var(--text); }
+
+    .field-group { margin: 4px 16px; display: flex; flex-direction: column; gap: 6px; }
+    .field {
+      background: var(--surface2);
+      border-radius: 13px;
+      padding: 13px 16px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .field-label { font-size: 12px; color: var(--text2); }
+    .field-value { font-size: 13px; font-weight: 700; color: var(--text); }
+    .field-value.accent { color: var(--accent); }
+
+    .surface-toggle {
+      display: flex; gap: 2px;
+      background: var(--surface);
+      border-radius: 11px; padding: 3px;
+      margin: 4px 16px;
+    }
+    .surf-opt {
+      flex: 1; text-align: center; padding: 9px;
+      border-radius: 9px;
+      font-size: 11px; font-weight: 700; color: var(--text3);
+    }
+    .surf-opt.active { background: var(--surface2); color: var(--text); }
+
+    .cta-stack { display: flex; flex-direction: column; gap: 8px; margin: 14px 16px 0; }
+    .cta-primary {
+      background: var(--accent); color: #070B13;
+      border-radius: 14px; padding: 16px;
+      text-align: center; font-size: 14px; font-weight: 900;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .cta-secondary {
+      background: var(--surface2); color: var(--text2);
+      border-radius: 14px; padding: 14px;
+      text-align: center; font-size: 13px; font-weight: 700;
+    }
+
+    /* ── Gear screen ── */
+    .gear-item {
+      background: var(--surface2);
+      border-radius: 18px; padding: 15px 16px;
+      margin: 5px 16px;
+    }
+    .gear-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+    .gear-name { font-size: 14px; font-weight: 800; }
+    .gear-sub { font-size: 11px; color: var(--text2); margin-top: 3px; }
+    .badge {
+      font-size: 9px; font-weight: 800; letter-spacing: 1px;
+      text-transform: uppercase; padding: 4px 9px; border-radius: 7px;
+    }
+    .badge.ok { background: rgba(74,222,128,0.1); color: var(--win); border: 1px solid rgba(74,222,128,0.25); }
+    .badge.warn { background: var(--alert-dim); color: var(--alert); border: 1px solid var(--alert-border); }
+
+    .bar-bg { width: 100%; height: 4px; background: var(--surface3); border-radius: 2px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 2px; }
+    .bar-fill.green { background: var(--win); }
+    .bar-fill.yellow { background: var(--accent); }
+    .bar-fill.orange { background: var(--alert); }
+    .bar-labels { display: flex; justify-content: space-between; margin-top: 5px; }
+    .bar-label { font-size: 10px; color: var(--text2); }
+    .bar-label.warn { color: var(--alert); }
+
+    .add-btn {
+      margin: 8px 16px;
+      border: 1.5px dashed var(--surface3);
+      border-radius: 16px; padding: 14px;
+      text-align: center; color: var(--text3);
+      font-size: 12px; font-weight: 700; letter-spacing: 0.5px;
+    }
+
+    /* ── Stats screen ── */
+    .stats-grid { display: flex; gap: 6px; margin: 8px 16px; }
+    .stat-box {
+      flex: 1; background: var(--surface2);
+      border-radius: 14px; padding: 14px;
+      text-align: center;
+    }
+    .stat-num { font-size: 30px; font-weight: 900; letter-spacing: -1px; line-height: 1; }
+    .stat-num.accent { color: var(--accent); }
+    .stat-num.win { color: var(--win); }
+    .stat-lbl {
+      font-size: 8px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--text2); margin-top: 5px;
+    }
+
+    .wl-bar { display: flex; margin: 8px 16px; border-radius: 12px; overflow: hidden; gap: 2px; }
+    .wl-seg { flex: 1; padding: 14px 10px; text-align: center; }
+    .wl-seg.win { background: rgba(74,222,128,0.1); border-radius: 12px 0 0 12px; }
+    .wl-seg.loss { background: rgba(248,113,113,0.1); border-radius: 0 12px 12px 0; }
+    .wl-num { font-size: 32px; font-weight: 900; letter-spacing: -1px; line-height: 1; }
+    .wl-num.win { color: var(--win); }
+    .wl-num.loss { color: var(--lose); }
+    .wl-lbl { font-size: 8px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text2); margin-top: 4px; }
+
+    .opp-list { background: var(--surface2); border-radius: 16px; margin: 0 16px; overflow: hidden; }
+    .opp-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px 16px; border-bottom: 1px solid var(--surface3);
+    }
+    .opp-row:last-child { border-bottom: none; }
+    .opp-name { font-size: 13px; font-weight: 700; }
+    .opp-record { font-size: 12px; font-weight: 700; color: var(--text2); }
+    .opp-record .w { color: var(--win); }
+    .opp-record .l { color: var(--lose); }
+
+    .error-breakdown {
+      background: var(--surface2); border-radius: 16px;
+      padding: 14px 16px; margin: 0 16px;
+    }
+    .error-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+    .error-row:last-child { margin-bottom: 0; }
+    .error-type { font-size: 12px; color: var(--text2); font-weight: 600; }
+    .error-pct { font-size: 13px; font-weight: 800; }
+    .error-detail { font-size: 10px; color: var(--text3); font-weight: 500; margin-left: 4px; }
+
+    /* ── Apple Watch Frame ── */
+    .watches-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+    .watch {
+      width: 176px; height: 210px;
+      background: #0A0F1A;
+      border-radius: 46px;
+      border: 2.5px solid #1A2540;
+      overflow: hidden; position: relative;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.04),
+        0 20px 60px rgba(0,0,0,0.8),
+        inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+    .watch-screen {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 18px 14px;
+      position: relative;
+    }
+    .watch-time {
+      position: absolute; top: 18px; left: 0; right: 0;
+      text-align: center; font-size: 10px;
+      font-weight: 700; color: var(--text2);
+    }
+    .w-section-lbl {
+      font-size: 8px; font-weight: 800; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--text3);
+      text-align: center;
+    }
+    .w-score {
+      display: flex; align-items: baseline; gap: 6px;
+      line-height: 1; margin: 2px 0;
+    }
+    .w-me { color: var(--accent); }
+    .w-them { color: var(--text); }
+    .w-dash { color: var(--text3); }
+    .w-big { font-size: 32px; font-weight: 900; letter-spacing: -1px; }
+    .w-mid { font-size: 24px; font-weight: 900; letter-spacing: -0.5px; }
+    .w-sm  { font-size: 20px; font-weight: 800; }
+    .w-divider { width: 80%; height: 1px; background: var(--surface2); margin: 5px auto; }
+    .w-mic {
+      position: absolute; bottom: 16px; left: 0; right: 0;
+      display: flex; align-items: center; justify-content: center; gap: 5px;
+      font-size: 8px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--text3);
+    }
+    .mic-dot {
+      width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.75); }
+    }
+
+    /* Watch shot grid */
+    .w-header-row {
+      display: flex; flex-direction: column; align-items: center;
+      margin-top: 14px; margin-bottom: 2px;
+    }
+    .w-point-lbl {
+      font-size: 9px; font-weight: 800; letter-spacing: 2px;
+      text-transform: uppercase; margin-bottom: 1px;
+    }
+    .w-point-lbl.you { color: var(--accent); }
+    .w-point-lbl.them { color: var(--alert); }
+    .w-how { font-size: 14px; font-weight: 900; color: var(--text); }
+    .w-timer { font-size: 16px; font-weight: 900; color: var(--text3); margin-bottom: 4px; }
+
+    .shot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; width: 100%; padding: 0 2px; }
+    .shot-btn {
+      border-radius: 10px; padding: 9px 5px;
+      text-align: center; font-size: 9px; font-weight: 800;
+      letter-spacing: 0.3px; line-height: 1.2;
+    }
+    .shot-btn.you {
+      background: var(--accent-dim); color: var(--accent);
+      border: 1px solid var(--accent-border);
+    }
+    .shot-btn.them {
+      background: var(--alert-dim); color: var(--alert);
+      border: 1px solid var(--alert-border);
+    }
+    .shot-btn.neutral { background: var(--surface2); color: var(--text2); }
+    .w-skip { font-size: 8px; color: var(--text3); text-align: center; margin-top: 3px; }
+
+    /* Watch: fault state */
+    .w-fault-big { font-size: 30px; font-weight: 900; color: var(--alert); line-height: 1; }
+    .w-fault-sub { font-size: 9px; color: var(--text2); font-weight: 700; letter-spacing: 1px; margin-top: 4px; }
+
+    /* Watch: end of game */
+    .w-game-win { font-size: 12px; font-weight: 900; color: var(--accent); letter-spacing: 1px; text-align: center; }
+    .w-game-score { font-size: 38px; font-weight: 900; letter-spacing: -1.5px; line-height: 1; }
+    .w-game-label { font-size: 8px; color: var(--text3); font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; }
+    .w-haptic-ring {
+      width: 60px; height: 60px; border-radius: 50%;
+      border: 2px solid var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 16px rgba(200,247,49,0.3);
+      margin: 6px auto;
+    }
+
+    /* ── Voice command guide ── */
+    .voice-guide {
+      background: var(--surface);
+      border: 1px solid var(--surface2);
+      border-radius: 20px;
+      padding: 24px;
+      margin: 24px 0;
+      max-width: 720px;
+    }
+    .voice-title {
+      font-size: 10px; font-weight: 800; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--text3); margin-bottom: 16px;
+    }
+    .voice-rows { display: flex; flex-direction: column; gap: 0; }
+    .voice-row {
+      display: flex; align-items: baseline; gap: 16px;
+      padding: 10px 0; border-bottom: 1px solid var(--surface2);
+    }
+    .voice-row:last-child { border-bottom: none; }
+    .voice-cmd {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 12px; font-weight: 700; color: var(--accent);
+      min-width: 180px; flex-shrink: 0;
+    }
+    .voice-desc { font-size: 12px; color: var(--text2); }
+    .voice-result { font-size: 11px; color: var(--text3); margin-top: 2px; }
+
+    /* ── Typography scale ── */
+    .type-scale { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+    .type-sample { display: flex; align-items: baseline; gap: 20px; }
+    .type-spec { font-size: 9px; color: var(--text3); font-family: monospace; min-width: 200px; }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!--  BRAND HEADER                                                 -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="brand">
+  <div class="brand-wordmark">TENNIS<span class="hl">LOG</span></div>
+  <div class="brand-tagline">Track · Improve · Win</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!--  DESIGN SYSTEM                                                -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title">Color System</div>
+</div>
+<div class="swatches">
+  <div class="swatch">
+    <div class="swatch-circle" style="background:#C8F731"></div>
+    <div class="swatch-name">Ace Yellow</div>
+    <div class="swatch-hex">#C8F731</div>
+  </div>
+  <div class="swatch">
+    <div class="swatch-circle" style="background:#070B13"></div>
+    <div class="swatch-name">Court Night</div>
+    <div class="swatch-hex">#070B13</div>
+  </div>
+  <div class="swatch">
+    <div class="swatch-circle" style="background:#111827"></div>
+    <div class="swatch-name">Surface</div>
+    <div class="swatch-hex">#111827</div>
+  </div>
+  <div class="swatch">
+    <div class="swatch-circle" style="background:#1C2638"></div>
+    <div class="swatch-name">Card</div>
+    <div class="swatch-hex">#1C2638</div>
+  </div>
+  <div class="swatch">
+    <div class="swatch-circle" style="background:#FF6835"></div>
+    <div class="swatch-name">Alert Orange</div>
+    <div class="swatch-hex">#FF6835</div>
+  </div>
+  <div class="swatch">
+    <div class="swatch-circle" style="background:#4ADE80"></div>
+    <div class="swatch-name">Win Green</div>
+    <div class="swatch-hex">#4ADE80</div>
+  </div>
+  <div class="swatch">
+    <div class="swatch-circle" style="background:#F87171"></div>
+    <div class="swatch-name">Loss Red</div>
+    <div class="swatch-hex">#F87171</div>
+  </div>
+  <div class="swatch">
+    <div class="swatch-circle" style="background:#60A5FA"></div>
+    <div class="swatch-name">Practice Blue</div>
+    <div class="swatch-hex">#60A5FA</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!--  iPHONE SCREENS                                               -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title">iPhone — Core Screens</div>
+  <div class="section-sub">4-tab navigation: Home · Sessions · Gear · Stats</div>
+</div>
+
+<div class="screens-row">
+
+  <!-- ── HOME ── -->
+  <div class="screen-wrapper">
+    <div class="iphone">
+      <div class="iphone-notch"></div>
+      <div class="iphone-screen">
+        <div class="status-bar">
+          <span>9:41</span>
+          <span class="status-icons">● ● ● 🔋</span>
+        </div>
+
+        <div class="page-header">
+          <div class="page-title">Good morning,<br>Winnie.</div>
+          <div class="page-subtitle">Summer 2025 · Outdoor · Hard</div>
+        </div>
+
+        <!-- Streak -->
+        <div class="streak-card">
+          <div>
+            <div class="streak-big">5</div>
+            <div class="streak-lbl">Day Streak</div>
+            <div class="streak-best">Best: 12 days</div>
+          </div>
+          <div>
+            <div class="week-label">This Week</div>
+            <div class="week-dots">
+              <div class="dot played">M</div>
+              <div class="dot played">T</div>
+              <div class="dot played">W</div>
+              <div class="dot today">T</div>
+              <div class="dot empty">F</div>
+              <div class="dot empty">S</div>
+              <div class="dot empty">S</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Alerts -->
+        <div class="card-label">Gear Alerts</div>
+        <div class="alert-card">
+          <div class="alert-row">
+            <div class="alert-pip"></div>
+            <div class="alert-name">Babolat Pure Drive</div>
+          </div>
+          <div class="alert-detail">Restring due · 22h played · 4 months old</div>
+        </div>
+        <div class="alert-card">
+          <div class="alert-row">
+            <div class="alert-pip"></div>
+            <div class="alert-name">Asics Gel-Resolution 9</div>
+          </div>
+          <div class="alert-detail">58.5h worn — replace soon (60h limit)</div>
+        </div>
+
+        <!-- Last session -->
+        <div class="card-label" style="margin-top:6px;">Last Session</div>
+        <div class="session-card">
+          <div class="session-top">
+            <div class="type-pill match">Match</div>
+            <div class="session-date">Tue · 90 min · ☁️ 22°C</div>
+          </div>
+          <div class="session-score">6–3 &nbsp;10–7&nbsp; <span class="win-tag">W</span></div>
+          <div class="session-stats">
+            <div class="sstat">vs <b>Sarah K.</b></div>
+            <div class="sstat"><b>142</b> cal</div>
+            <div class="sstat">HR <b>156</b></div>
+          </div>
+          <div class="stars">★★★★☆</div>
+        </div>
+
+        <div class="start-btn">＋ Start Session</div>
+      </div>
+      <div class="tab-bar">
+        <div class="tab active"><span class="tab-icon">⌂</span><span class="tab-text">Home</span></div>
+        <div class="tab"><span class="tab-icon">◷</span><span class="tab-text">Sessions</span></div>
+        <div class="tab"><span class="tab-icon">◉</span><span class="tab-text">Gear</span></div>
+        <div class="tab"><span class="tab-icon">↗</span><span class="tab-text">Stats</span></div>
+      </div>
+    </div>
+    <div class="screen-label">Home</div>
+  </div>
+
+  <!-- ── START SESSION ── -->
+  <div class="screen-wrapper">
+    <div class="iphone">
+      <div class="iphone-notch"></div>
+      <div class="iphone-screen">
+        <div class="status-bar">
+          <span>9:41</span>
+          <span class="status-icons">● ● ● 🔋</span>
+        </div>
+
+        <div class="page-header" style="margin-bottom:8px;">
+          <div class="page-title" style="font-size:20px;">New Session</div>
+        </div>
+
+        <div class="type-grid">
+          <div class="type-btn match-btn">
+            <span class="type-icon">🏆</span>
+            <span class="type-name">Match</span>
+          </div>
+          <div class="type-btn practice-btn">
+            <span class="type-icon">🎾</span>
+            <span class="type-name">Practice</span>
+          </div>
+        </div>
+
+        <div class="card-label" style="margin-top:8px;">Match Details</div>
+        <div class="field-group">
+          <div class="field">
+            <div class="field-label">Opponent</div>
+            <div class="field-value accent">Sarah K. ›</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Format</div>
+            <div class="field-value">Singles ›</div>
+          </div>
+        </div>
+
+        <div class="card-label" style="margin-top:8px;">Surface</div>
+        <div class="surface-toggle">
+          <div class="surf-opt active">Hard Court</div>
+          <div class="surf-opt">Clay</div>
+        </div>
+
+        <div class="card-label" style="margin-top:8px;">Racket</div>
+        <div class="field-group">
+          <div class="field">
+            <div class="field-label">Using</div>
+            <div class="field-value">Babolat Pure Drive ›</div>
+          </div>
+        </div>
+
+        <div class="cta-stack">
+          <div class="cta-primary">▶ Start on Watch</div>
+          <div class="cta-secondary">Start on iPhone</div>
+        </div>
+      </div>
+      <div class="tab-bar">
+        <div class="tab active"><span class="tab-icon">⌂</span><span class="tab-text">Home</span></div>
+        <div class="tab"><span class="tab-icon">◷</span><span class="tab-text">Sessions</span></div>
+        <div class="tab"><span class="tab-icon">◉</span><span class="tab-text">Gear</span></div>
+        <div class="tab"><span class="tab-icon">↗</span><span class="tab-text">Stats</span></div>
+      </div>
+    </div>
+    <div class="screen-label">Start Session</div>
+  </div>
+
+  <!-- ── GEAR ── -->
+  <div class="screen-wrapper">
+    <div class="iphone">
+      <div class="iphone-notch"></div>
+      <div class="iphone-screen">
+        <div class="status-bar">
+          <span>9:41</span>
+          <span class="status-icons">● ● ● 🔋</span>
+        </div>
+
+        <div class="page-header">
+          <div class="page-title" style="font-size:20px;">My Gear</div>
+        </div>
+
+        <div class="card-label">Rackets</div>
+
+        <div class="gear-item">
+          <div class="gear-top">
+            <div>
+              <div class="gear-name">Babolat Pure Drive</div>
+              <div class="gear-sub">RPM Blast 16 · 55 lbs · Last: Jan 2025</div>
+            </div>
+            <div class="badge warn">Restring</div>
+          </div>
+          <div class="bar-bg"><div class="bar-fill orange" style="width:88%"></div></div>
+          <div class="bar-labels">
+            <div class="bar-label warn">22h played</div>
+            <div class="bar-label">25h limit</div>
+          </div>
+        </div>
+
+        <div class="gear-item">
+          <div class="gear-top">
+            <div>
+              <div class="gear-name">Wilson Pro Staff 97</div>
+              <div class="gear-sub">Luxilon ALU Power · 52 lbs · Last: Mar 2025</div>
+            </div>
+            <div class="badge ok">Good</div>
+          </div>
+          <div class="bar-bg"><div class="bar-fill green" style="width:36%"></div></div>
+          <div class="bar-labels">
+            <div class="bar-label">9h played</div>
+            <div class="bar-label">25h limit</div>
+          </div>
+        </div>
+
+        <div class="card-label" style="margin-top:8px;">Shoes</div>
+
+        <div class="gear-item">
+          <div class="gear-top">
+            <div>
+              <div class="gear-name">Asics Gel-Resolution 9</div>
+              <div class="gear-sub">Hard court · Added Mar 2025</div>
+            </div>
+            <div class="badge warn">Replace Soon</div>
+          </div>
+          <div class="bar-bg"><div class="bar-fill orange" style="width:98%"></div></div>
+          <div class="bar-labels">
+            <div class="bar-label warn">58.5h worn</div>
+            <div class="bar-label">60h limit</div>
+          </div>
+        </div>
+
+        <div class="gear-item">
+          <div class="gear-top">
+            <div>
+              <div class="gear-name">Nike Court Air Zoom</div>
+              <div class="gear-sub">Clay · Added Jan 2025</div>
+            </div>
+            <div class="badge ok">Good</div>
+          </div>
+          <div class="bar-bg"><div class="bar-fill yellow" style="width:55%"></div></div>
+          <div class="bar-labels">
+            <div class="bar-label">33h worn</div>
+            <div class="bar-label">60h limit</div>
+          </div>
+        </div>
+
+        <div class="add-btn">＋ Add Gear</div>
+      </div>
+      <div class="tab-bar">
+        <div class="tab"><span class="tab-icon">⌂</span><span class="tab-text">Home</span></div>
+        <div class="tab"><span class="tab-icon">◷</span><span class="tab-text">Sessions</span></div>
+        <div class="tab active"><span class="tab-icon">◉</span><span class="tab-text">Gear</span></div>
+        <div class="tab"><span class="tab-icon">↗</span><span class="tab-text">Stats</span></div>
+      </div>
+    </div>
+    <div class="screen-label">Gear</div>
+  </div>
+
+  <!-- ── STATS ── -->
+  <div class="screen-wrapper">
+    <div class="iphone">
+      <div class="iphone-notch"></div>
+      <div class="iphone-screen">
+        <div class="status-bar">
+          <span>9:41</span>
+          <span class="status-icons">● ● ● 🔋</span>
+        </div>
+
+        <div class="page-header">
+          <div class="page-title" style="font-size:20px;">Summer 2025</div>
+          <div class="page-subtitle">32 sessions · 48h played</div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-num accent">48</div>
+            <div class="stat-lbl">Hours</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">32</div>
+            <div class="stat-lbl">Sessions</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num win">74<span style="font-size:16px">%</span></div>
+            <div class="stat-lbl">Win Rate</div>
+          </div>
+        </div>
+
+        <div class="wl-bar">
+          <div class="wl-seg win">
+            <div class="wl-num win">14</div>
+            <div class="wl-lbl">Wins</div>
+          </div>
+          <div class="wl-seg loss">
+            <div class="wl-num loss">5</div>
+            <div class="wl-lbl">Losses</div>
+          </div>
+        </div>
+
+        <div class="card-label">vs. Opponents</div>
+        <div class="opp-list">
+          <div class="opp-row">
+            <div class="opp-name">Sarah K.</div>
+            <div class="opp-record"><span class="w">8</span> – <span class="l">2</span></div>
+          </div>
+          <div class="opp-row">
+            <div class="opp-name">Mei L.</div>
+            <div class="opp-record"><span class="w">3</span> – <span class="l">2</span></div>
+          </div>
+          <div class="opp-row">
+            <div class="opp-name">Club Ladder</div>
+            <div class="opp-record"><span class="w">3</span> – <span class="l">1</span></div>
+          </div>
+        </div>
+
+        <div class="card-label" style="margin-top:10px;">My Unforced Errors</div>
+        <div class="error-breakdown">
+          <div class="error-row">
+            <div class="error-type">Forehand</div>
+            <div>
+              <span class="error-pct">38%</span>
+              <span class="error-detail">net 60% · out 40%</span>
+            </div>
+          </div>
+          <div class="error-row">
+            <div class="error-type">Backhand</div>
+            <div>
+              <span class="error-pct">62%</span>
+              <span class="error-detail">net 45% · out 55%</span>
+            </div>
+          </div>
+          <div class="error-row" style="border-top:1px solid var(--surface3);margin-top:8px;padding-top:8px;">
+            <div class="error-type">First serve %</div>
+            <div><span class="error-pct" style="color:var(--accent)">58%</span></div>
+          </div>
+          <div class="error-row">
+            <div class="error-type">Aces</div>
+            <div><span class="error-pct">12</span></div>
+          </div>
+          <div class="error-row">
+            <div class="error-type">Double faults</div>
+            <div><span class="error-pct">8</span></div>
+          </div>
+        </div>
+
+      </div>
+      <div class="tab-bar">
+        <div class="tab"><span class="tab-icon">⌂</span><span class="tab-text">Home</span></div>
+        <div class="tab"><span class="tab-icon">◷</span><span class="tab-text">Sessions</span></div>
+        <div class="tab"><span class="tab-icon">◉</span><span class="tab-text">Gear</span></div>
+        <div class="tab active"><span class="tab-icon">↗</span><span class="tab-text">Stats</span></div>
+      </div>
+    </div>
+    <div class="screen-label">Stats</div>
+  </div>
+
+</div><!-- /screens-row -->
+
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!--  APPLE WATCH SCREENS                                          -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title">Apple Watch — Match Scoring</div>
+  <div class="section-sub">Voice primary · silent record · glance to confirm</div>
+</div>
+
+<div class="watches-row">
+
+  <!-- Active score display -->
+  <div class="screen-wrapper">
+    <div class="watch">
+      <div class="watch-screen">
+        <div class="watch-time">9:41</div>
+        <div style="margin-top:12px;">
+          <div class="w-section-lbl">SETS</div>
+          <div class="w-score" style="justify-content:center;">
+            <span class="w-big w-me">1</span>
+            <span class="w-big w-dash">–</span>
+            <span class="w-big w-them">0</span>
+          </div>
+          <div class="w-divider"></div>
+          <div class="w-section-lbl">GAMES</div>
+          <div class="w-score" style="justify-content:center;">
+            <span class="w-mid w-me">4</span>
+            <span class="w-mid w-dash">–</span>
+            <span class="w-mid w-them">2</span>
+          </div>
+          <div class="w-divider"></div>
+          <div class="w-section-lbl">POINT</div>
+          <div class="w-score" style="justify-content:center;">
+            <span class="w-sm w-me">40</span>
+            <span class="w-sm w-dash">–</span>
+            <span class="w-sm w-them">30</span>
+          </div>
+        </div>
+        <div class="w-mic">
+          <div class="mic-dot"></div>
+          Listening
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">Active match</div>
+  </div>
+
+  <!-- Shot type — you won (tap mode) -->
+  <div class="screen-wrapper">
+    <div class="watch">
+      <div class="watch-screen">
+        <div class="w-header-row">
+          <div class="w-point-lbl you">YOUR POINT</div>
+          <div class="w-how">How?</div>
+          <div class="w-timer">8</div>
+        </div>
+        <div class="shot-grid">
+          <div class="shot-btn you">Ace</div>
+          <div class="shot-btn you">FH Winner</div>
+          <div class="shot-btn you">BH Winner</div>
+          <div class="shot-btn neutral">Their Error</div>
+        </div>
+        <div class="w-skip">↓ wrist down to skip</div>
+      </div>
+    </div>
+    <div class="screen-label">Shot type — you won</div>
+  </div>
+
+  <!-- Shot type — they won (tap mode) -->
+  <div class="screen-wrapper">
+    <div class="watch">
+      <div class="watch-screen">
+        <div class="w-header-row">
+          <div class="w-point-lbl them">THEIR POINT</div>
+          <div class="w-how">Your error?</div>
+          <div class="w-timer">8</div>
+        </div>
+        <div class="shot-grid">
+          <div class="shot-btn them">FH Net</div>
+          <div class="shot-btn them">FH Out</div>
+          <div class="shot-btn them">BH Net</div>
+          <div class="shot-btn them">BH Out</div>
+        </div>
+        <div class="w-skip">↑ crown = their winner</div>
+      </div>
+    </div>
+    <div class="screen-label">Shot type — they won</div>
+  </div>
+
+  <!-- After "fault" -->
+  <div class="screen-wrapper">
+    <div class="watch">
+      <div class="watch-screen">
+        <div class="watch-time">9:41</div>
+        <div style="text-align:center;margin-top:14px;">
+          <div class="w-section-lbl" style="margin-bottom:6px;">SERVE</div>
+          <div class="w-fault-big">FAULT</div>
+          <div class="w-fault-sub">→ 2nd serve</div>
+          <div class="w-divider" style="margin:10px auto;width:60%;"></div>
+          <div class="w-section-lbl">POINT</div>
+          <div class="w-score" style="justify-content:center;margin-top:4px;">
+            <span class="w-sm w-me">40</span>
+            <span class="w-sm w-dash">–</span>
+            <span class="w-sm w-them">30</span>
+          </div>
+        </div>
+        <div class="w-mic">
+          <div class="mic-dot"></div>
+          Listening
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">After "fault"</div>
+  </div>
+
+  <!-- Game won -->
+  <div class="screen-wrapper">
+    <div class="watch">
+      <div class="watch-screen">
+        <div class="watch-time">9:41</div>
+        <div style="text-align:center;margin-top:10px;">
+          <div class="w-game-win">GAME YOU ✓</div>
+          <div class="w-haptic-ring">
+            <div style="font-size:20px;">🏆</div>
+          </div>
+          <div class="w-game-score" style="color:var(--accent);">4 – <span style="color:var(--text2)">2</span></div>
+          <div class="w-game-label">Games in set 1</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">Game won (haptic)</div>
+  </div>
+
+</div><!-- /watches-row -->
+
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!--  VOICE COMMAND REFERENCE                                      -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title">Voice Command Reference</div>
+  <div class="section-sub">Both modes available — switchable in Settings</div>
+</div>
+
+<div class="voice-guide">
+  <div class="voice-title">Mode A — Compound voice (hands-free)</div>
+  <div class="voice-rows">
+    <div class="voice-row">
+      <div class="voice-cmd">"point me, ace"</div>
+      <div><div class="voice-desc">Your point · Ace logged · First serve in</div></div>
+    </div>
+    <div class="voice-row">
+      <div class="voice-cmd">"point me, forehand winner"</div>
+      <div><div class="voice-desc">Your point · FH winner</div></div>
+    </div>
+    <div class="voice-row">
+      <div class="voice-cmd">"point me, their error"</div>
+      <div><div class="voice-desc">Your point · Opponent unforced error</div></div>
+    </div>
+    <div class="voice-row">
+      <div class="voice-cmd">"fault"</div>
+      <div><div class="voice-desc">First serve fault → now on 2nd serve</div></div>
+    </div>
+    <div class="voice-row">
+      <div class="voice-cmd">"double fault"</div>
+      <div><div class="voice-desc">Their point · Double fault logged</div></div>
+    </div>
+    <div class="voice-row">
+      <div class="voice-cmd">"point them, forehand net"</div>
+      <div><div class="voice-desc">Their point · Your FH unforced error into net</div></div>
+    </div>
+    <div class="voice-row">
+      <div class="voice-cmd">"point them, backhand out"</div>
+      <div><div class="voice-desc">Their point · Your BH error long/wide</div></div>
+    </div>
+    <div class="voice-row">
+      <div class="voice-cmd">"undo"</div>
+      <div><div class="voice-desc">Revert last point</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="voice-guide" style="margin-top:12px;">
+  <div class="voice-title">Mode B — Voice score + tap shot type</div>
+  <div class="voice-rows">
+    <div class="voice-row">
+      <div class="voice-cmd">"point me"</div>
+      <div><div class="voice-desc">Score updates → Watch shows 4 shot-type buttons for 8s</div></div>
+    </div>
+    <div class="voice-row">
+      <div class="voice-cmd">"point them"</div>
+      <div><div class="voice-desc">Score updates → Watch shows FH/BH net/out for 8s</div></div>
+    </div>
+    <div class="voice-row">
+      <div class="voice-cmd">"fault"</div>
+      <div><div class="voice-desc">Same in both modes — first serve fault</div></div>
+    </div>
+    <div class="voice-row">
+      <div class="voice-cmd">Wrist down / timeout</div>
+      <div><div class="voice-desc">Shot type skipped · Point logged as "unclassified"</div></div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
