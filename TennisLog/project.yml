@@ -1,0 +1,72 @@
+name: TennisLog
+options:
+  bundleIdPrefix: com.yourname          # ← change to your bundle ID prefix
+  deploymentTarget:
+    iOS: "17.0"
+    watchOS: "10.0"
+  createIntermediateGroups: true
+  groupSortPosition: top
+  xcodeVersion: "15.0"
+
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+
+targets:
+
+  TennisLog:
+    type: application
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: TennisLog
+      - path: Shared
+    resources:
+      - TennisLog/Resources/Assets.xcassets
+    entitlements:
+      path: TennisLog/Resources/TennisLog.entitlements
+      properties:
+        com.apple.developer.healthkit: true
+        com.apple.developer.healthkit.access: []
+    info:
+      path: TennisLog/Resources/Info.plist
+      properties:
+        CFBundleName: TennisLog
+        CFBundleDisplayName: TennisLog
+        UILaunchScreen: {}
+        NSHealthShareUsageDescription: "TennisLog reads your tennis workout data to track session metrics like heart rate, calories, and duration."
+        NSHealthUpdateUsageDescription: "TennisLog saves your tennis sessions as workouts in Apple Health."
+        NSSpeechRecognitionUsageDescription: "TennisLog uses speech recognition on Apple Watch to record scores during matches."
+        NSMicrophoneUsageDescription: "TennisLog listens for score calls during matches on Apple Watch."
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.yourname.tennislog
+        DEVELOPMENT_TEAM: ""            # ← set your Apple Developer Team ID
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+
+  TennisLogWatch:
+    type: application
+    platform: watchOS
+    deploymentTarget: "10.0"
+    sources:
+      - path: TennisLogWatch
+      - path: Shared
+    resources:
+      - TennisLogWatch/Resources/Assets.xcassets
+    entitlements:
+      path: TennisLogWatch/Resources/TennisLogWatch.entitlements
+      properties:
+        com.apple.developer.healthkit: true
+        com.apple.developer.healthkit.access: []
+    info:
+      path: TennisLogWatch/Resources/Info.plist
+      properties:
+        CFBundleName: TennisLog
+        WKApplication: true
+        NSSpeechRecognitionUsageDescription: "TennisLog listens for score calls during matches."
+        NSMicrophoneUsageDescription: "TennisLog listens for score calls during matches."
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.yourname.tennislog.watchkitapp
+        DEVELOPMENT_TEAM: ""            # ← same Team ID as above
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
