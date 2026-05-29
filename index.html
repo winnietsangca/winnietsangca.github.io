@@ -19,11 +19,15 @@
   <meta property="og:url"         content="https://winnietsang.ca/" />
   <meta property="og:title"       content="Winnie Tsang — Senior Staff Product Manager" />
   <meta property="og:description" content="Senior Staff PM at Intuit (TurboTax Mobile). Building AI-native mobile experiences that help millions of people file with confidence." />
-  <meta property="og:image"       content="https://winnietsang.ca/UptownMedia_Intuit%20Headshots%20Day%202-2400.jpg" />
+  <meta property="og:image"       content="https://winnietsang.ca/winnie-tsang-headshot.jpg" />
   <meta name="twitter:card"       content="summary_large_image" />
   <meta name="twitter:title"      content="Winnie Tsang — Senior Staff Product Manager" />
   <meta name="twitter:description" content="Senior Staff PM at Intuit (TurboTax Mobile). Building AI-native mobile experiences that help millions of people file with confidence." />
-  <meta name="twitter:image"      content="https://winnietsang.ca/UptownMedia_Intuit%20Headshots%20Day%202-2400.jpg" />
+  <meta name="twitter:image"      content="https://winnietsang.ca/winnie-tsang-headshot.jpg" />
+
+  <!-- SEO -->
+  <meta name="description" content="Senior Staff PM at Intuit (TurboTax Mobile). $34M+ incremental revenue. Building AI-native mobile experiences that help millions of people file with confidence. Open to GPM and Head of Product roles." />
+  <link rel="canonical" href="https://winnietsang.ca/" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -533,12 +537,49 @@
     }
     .fade-up.visible { opacity: 1; transform: translateY(0); }
 
+    /* ── HAMBURGER ── */
+    .nav-toggle {
+      display: none;
+      flex-direction: column; justify-content: center; gap: 5px;
+      width: 36px; height: 36px; cursor: pointer;
+      background: none; border: none; padding: 4px;
+    }
+    .nav-toggle span {
+      display: block; width: 22px; height: 1.5px;
+      background: var(--ink); border-radius: 2px;
+      transition: transform .25s, opacity .25s;
+    }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed; top: 56px; left: 0; right: 0;
+      background: rgba(250,247,242,.97);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px 24px;
+      z-index: 99;
+      flex-direction: column; gap: 4px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      color: var(--ink-mid); text-decoration: none;
+      font-size: .9rem; font-weight: 500;
+      padding: 12px 0; border-bottom: 1px solid var(--border);
+      letter-spacing: .02em;
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover { color: var(--ink); }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       body { cursor: auto; }
       .cursor { display: none; }
       nav { padding: 0 24px; }
       nav ul { display: none; }
+      .nav-toggle { display: flex; }
       .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; gap: 40px; min-height: auto; }
       .hero-photo { display: none; }
       .stats-section { grid-template-columns: 1fr; }
@@ -624,7 +665,17 @@
     <li><a href="#experience">Experience</a></li>
     <li><a href="https://www.linkedin.com/messaging/compose/?recipients=tsangwinnie" target="_blank">Contact</a></li>
   </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#work" onclick="closeMobileMenu()">Work</a>
+  <a href="#experience" onclick="closeMobileMenu()">Experience</a>
+  <a href="https://www.linkedin.com/messaging/compose/?recipients=tsangwinnie" target="_blank" onclick="closeMobileMenu()">Contact</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -643,7 +694,7 @@
   </div>
   <div class="hero-photo">
     <div class="photo-frame">
-      <img src="UptownMedia_Intuit Headshots Day 2-2400.jpg" alt="Winnie Tsang" style="width:100%;height:100%;object-fit:cover;border-radius:160px 160px 80px 80px;">
+      <img src="winnie-tsang-headshot.jpg" alt="Winnie Tsang" style="width:100%;height:100%;object-fit:cover;border-radius:160px 160px 80px 80px;">
     </div>
     <div class="photo-decoration">Toronto,<br>ON</div>
   </div>
@@ -844,7 +895,7 @@
             <li>Co-built the PM AI Open Market with Ryan Brown — internal AI skills, agents, and connectors marketplace for the full Consumer Group PM org</li>
             <li>Shipped @product-agent: auto-generates PRDs and briefs from a prompt with context. Cuts first-draft time from hours to minutes.</li>
             <li>Shipped Eval and contribution guidelines to ensure the quality of the skills and agents in the market</li>
-            <li>Planned PM AI learning sessiosn to enable the anxious PMs to use AI effectively</li>
+            <li>Planned PM AI learning sessions to enable the anxious PMs to use AI effectively</li>
           </ul>
           <div class="card-pills">
             <span class="pill strong">3× PM productivity — north star</span>
@@ -916,6 +967,56 @@
         </ul>
       </div>
     </div>
+    <div class="exp-item fade-up" style="transition-delay:.24s">
+      <div class="exp-left">
+        <div class="exp-date">Sept 2019 – Mar 2022</div>
+        <div class="exp-role">Senior Manager,<br>Product Owner</div>
+        <div class="exp-co">Tangerine (Scotiabank)</div>
+      </div>
+      <div class="exp-right">
+        <p class="exp-desc">Owned the end-to-end Mobile client onboarding journey for Tangerine, one of Canada's largest digital banks. Built and led the 3-year mobile roadmap.</p>
+        <ul class="exp-bullets">
+          <li>Grew mobile-onboarded clients from 5% → 40%+ of all digital sign-ups</li>
+          <li>Reduced client sign-up time from 6 min → 4 min via Mobile ID document verification</li>
+          <li>Lifted App Store ratings iOS 2.9 → 4.1 and Android 3.5 → 4.5 within 6 months</li>
+          <li>Authored executive presentation for Chief AML Officer used directly with FINTRAC regulators</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item fade-up" style="transition-delay:.36s">
+      <div class="exp-left">
+        <div class="exp-date">Jul 2013 – Sept 2018</div>
+        <div class="exp-role">Senior Manager,<br>Mobile &amp; Digital</div>
+        <div class="exp-co">Scotiabank</div>
+      </div>
+      <div class="exp-right">
+        <p class="exp-desc">Progressed from Lead BA to Senior Manager across Mobile &amp; Web Development and Digital PMO. Oversaw a $20M+ annual Digital Banking portfolio and led teams of up to 25.</p>
+        <ul class="exp-bullets">
+          <li>Led Scotiabank's Apple Pay launch as PM + Program Delivery Manager — day zero to first payment in 3.5 months</li>
+          <li>Created Canada's first Email Money Transfer via iMessage feature (zero to one)</li>
+          <li>Led eReceipt — first in any Canadian bank — through concept, design, development, and production</li>
+          <li>Scotiabank Best of the Best Award 2015 &amp; 2016; Top Performer in all of IT&amp;S, 2016</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item fade-up" style="transition-delay:.48s">
+      <div class="exp-left">
+        <div class="exp-date">2006 – 2013</div>
+        <div class="exp-role">Earlier roles</div>
+        <div class="exp-co">BMO · TELUS · Wind Mobile</div>
+      </div>
+      <div class="exp-right">
+        <ul class="exp-bullets">
+          <li>Senior Business Analyst, Mobile — Bank of Montreal (2011–2013)</li>
+          <li>Corporate Reporting Analyst — Wind Mobile (2010–2011)</li>
+          <li>Business Analyst II — TELUS (2008–2010)</li>
+          <li>Business Analyst — Just Energy / City of Markham / earlier roles (2006–2008)</li>
+        </ul>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -1071,6 +1172,20 @@
     });
   }, { threshold: 0.1 });
   document.querySelectorAll('.counter').forEach(el => counterObs.observe(el));
+
+  // ── MOBILE NAV ──
+  const navToggle = document.getElementById('navToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  navToggle.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    navToggle.classList.toggle('open', isOpen);
+    navToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+  });
+  function closeMobileMenu() {
+    mobileMenu.classList.remove('open');
+    navToggle.classList.remove('open');
+    navToggle.setAttribute('aria-label', 'Open menu');
+  }
 
   // ── PROJECT CARD TOGGLE ──
   function toggleCard(card) {
